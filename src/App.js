@@ -1,24 +1,29 @@
-import logo from './logo.svg';
+// App.js
+
+import React from 'react';
 import './App.css';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import SignInPage from './Frontend/AuthenticationAndSignIn/SignInPage';
+import SignupPage from './Frontend/AuthenticationAndSignIn/SignUpPage/SignUppage';
+import MainPage from './Frontend/PMP/pmp'; // Import your main page component
+import store from './Frontend/ReduxStore/store';
+import SignupSuccessPage from './Frontend/AuthenticationAndSignIn/SignUpPage/SignupSuccessPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Provider store={store}>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<SignInPage />}></Route>
+          <Route path="/signup" element={<SignupPage />}></Route>
+          <Route path="/SignupSuccessPage" element={<SignupSuccessPage />}></Route>
+          <Route path="main" element={<MainPage />}></Route>
+        </Routes>
+      </div>
+      </Provider>
+    </Router>
   );
 }
 
