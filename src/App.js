@@ -16,7 +16,7 @@ function App() {
       <Provider store={store}>
       <div className="App">
         <Routes>
-          <Route path="/" element={<SignInPage />}></Route>
+          <Route path="/login" element={<SignInPage />}></Route>
           <Route path="/signup" element={<SignupPage />}></Route>
           <Route path="/SignupSuccessPage" element={<SignupSuccessPage />}></Route>
           <Route path="main" element={<MainPage />}></Route>

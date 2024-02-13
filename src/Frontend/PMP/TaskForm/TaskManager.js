@@ -12,9 +12,9 @@ const TaskManagement = ({ addTask }) => {
   };
 
   return (
-    <div>
-      <h2>Task Management</h2>
-      <button onClick={() => setShowPopup(true)}>Add Task</button>
+    <div className="task-management-container">
+      <h3 className='heading-add-task'>Please Add Your Task Here!</h3>
+      <button className="add-task-button1" onClick={() => setShowPopup(true)}>Add Task</button>
       {showPopup && <TaskFormPopup onSubmit={handleSubmit} onClose={() => setShowPopup(false)} />}
       {/* Your task list rendering */}
     </div>

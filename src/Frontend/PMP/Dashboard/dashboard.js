@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom'; // Import useNavigate
 import { connect } from 'react-redux';
-import { addTask, deleteTask,updateTask } from '../../ReduxStore/tasksActions';
+import { addTask, deleteTask, updateTask } from '../../ReduxStore/tasksActions';
 import TaskManagement from '../TaskForm/TaskManager';
 import TaskList from '../TaskList/tasklist';
 import EditTaskPopup from '../TaskEdit/EditTaskPopup';
+import './dashboard.css'; // Import your CSS file
+import Header from '../header/header';
 
-const TaskManager = ({ tasks, addTask, deleteTask, updateTask }) => {
+const Dashboard = ({ tasks, addTask, deleteTask, updateTask }) => {
   const location = useLocation();
+  const navigate = useNavigate(); // Get the navigate function
   const [username, setUsername] = useState('');
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [editedTask, setEditedTask] = useState(null);
@@ -17,9 +20,6 @@ const TaskManager = ({ tasks, addTask, deleteTask, updateTask }) => {
     const usernameParam = params.get('username');
     setUsername(usernameParam);
   }, [location.search]);
-
-
-
 
   const handleDeleteTask = (taskId) => {
     deleteTask(taskId);
@@ -36,16 +36,23 @@ const TaskManager = ({ tasks, addTask, deleteTask, updateTask }) => {
     setEditedTask(null);
   };
 
+  const handleLogout = () => {
+    // Your logout logic here
+    navigate('/login'); // Redirect to the login page after logout
+  };
+
   return (
-    <div>
-      <p>{username} </p>
-      <h2>Task Manager</h2>
-      <div>
+    <div className="dashboard-container">
+      <Header 
+        username={username} 
+        onLogout={handleLogout} 
+      />
+      <div className="task-management">
         <TaskManagement addTask={addTask} />
       </div>
-      <ul>
-        <TaskList onDeleteTask={handleDeleteTask} onEditTask={handleEditTask} tasks={tasks}/>
-      </ul>
+      <div className="task-list">
+        <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} onEditTask={handleEditTask} />
+      </div>
       {showEditPopup && <EditTaskPopup task={editedTask} onUpdate={handleUpdateTask} onClose={() => setShowEditPopup(false)} />}
     </div>
   );
@@ -63,4 +70,4 @@ const mapDispatchToProps = {
   updateTask
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskManager);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

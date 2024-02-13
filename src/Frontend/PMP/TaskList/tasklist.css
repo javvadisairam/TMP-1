@@ -2,6 +2,7 @@
 
 .task-list {
     font-family: Arial, sans-serif;
+    color: #0056b3;
   }
   
   .task-list h2 {
@@ -33,3 +34,83 @@
     background-color: #f2f2f2;
   }
   
+  .status-todo {
+    background-color: #ffcccb; /* Light red */
+  }
+  
+  .status-in-progress {
+    background-color: #bda30d; /* Gold */
+  }
+  
+  .status-completed {
+    background-color: #90ee90; /* Light green */
+  }
+
+  /* Define priority colors */
+.priority-low {
+  color: #006400; /* Dark green */
+}
+
+.priority-medium {
+  color: #ffd700; /* Gold */
+}
+
+.priority-high {
+  color: #ff0000; /* Red */
+}
+
+.task-title-container {
+  position: relative;
+}
+
+.task-title {
+  max-width: 150px; /* Adjust the max-width as needed */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block; /* Ensures the overflow works */
+  transition: max-width 0.3s ease; /* Add transition effect */
+}
+
+.task-title:hover {
+  max-width: none; /* Remove the max-width on hover */
+  position: absolute;
+  z-index: 9999; /* Ensure the full title appears above other elements */
+  background-color: #fff; /* Add background color to improve readability */
+  padding: 5px; /* Add padding for better appearance */
+  border: 1px solid #ccc; /* Add border for clarity */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow for elevation */
+}
+
+/* Edit button */
+.edit-button {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 2px;
+}
+
+.edit-button:hover {
+  background-color: darkgreen;
+}
+
+/* Delete button */
+.delete-button {
+  background-color: red;
+  margin: 2px;
+
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: darkred;
+}
