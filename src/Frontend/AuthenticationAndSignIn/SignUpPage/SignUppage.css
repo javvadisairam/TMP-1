@@ -1,5 +1,12 @@
 /* SignUppage.css */
 
+.sign-up{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .signup-container {
   width: 350px;
   padding: 30px;

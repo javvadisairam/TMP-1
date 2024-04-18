@@ -1,16 +1,18 @@
+// Dashboard.js
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useLocation, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addTask, deleteTask, updateTask } from '../../ReduxStore/tasksActions';
+import { addTask, deleteTask, updateTask, changePage, changeItemsPerPage } from '../../ReduxStore/tasksActions';
 import TaskManagement from '../TaskForm/TaskManager';
 import TaskList from '../TaskList/tasklist';
 import EditTaskPopup from '../TaskEdit/EditTaskPopup';
-import './dashboard.css'; // Import your CSS file
+import './dashboard.css';
 import Header from '../header/header';
+import PaginationComponent from '../Pagination';
 
-const Dashboard = ({ tasks, addTask, deleteTask, updateTask }) => {
+const Dashboard = ({ tasks, currentPage, itemsPerPage, addTask, deleteTask, updateTask, changePage, changeItemsPerPage }) => {
   const location = useLocation();
-  const navigate = useNavigate(); // Get the navigate function
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [editedTask, setEditedTask] = useState(null);
@@ -37,37 +39,36 @@ const Dashboard = ({ tasks, addTask, deleteTask, updateTask }) => {
   };
 
   const handleLogout = () => {
-    // Your logout logic here
-    navigate('/login'); // Redirect to the login page after logout
+    navigate('/login');
   };
 
   return (
     <div className="dashboard-container">
-      <Header 
-        username={username} 
-        onLogout={handleLogout} 
-      />
+      <Header username={username} onLogout={handleLogout} />
       <div className="task-management">
         <TaskManagement addTask={addTask} />
       </div>
       <div className="task-list">
-        <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} onEditTask={handleEditTask} />
+        <TaskList tasks={tasks} currentPage={currentPage} itemsPerPage={itemsPerPage} onDeleteTask={handleDeleteTask} onEditTask={handleEditTask} />
       </div>
       {showEditPopup && <EditTaskPopup task={editedTask} onUpdate={handleUpdateTask} onClose={() => setShowEditPopup(false)} />}
+      <PaginationComponent />
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    tasks: state.tasks.tasks,
-  };
-};
+const mapStateToProps = (state) => ({
+  tasks: state.tasks.tasks,
+  currentPage: state.tasks.currentPage,
+  itemsPerPage: state.tasks.itemsPerPage
+});
 
 const mapDispatchToProps = {
   addTask,
   deleteTask,
-  updateTask
+  updateTask,
+  changePage,
+  changeItemsPerPage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

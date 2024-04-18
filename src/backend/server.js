@@ -15,7 +15,7 @@ app.use(cors({
 }));
 
 // Mock user database (replace with a real database)
-const users = [];
+const users = {};
 
 // Secret key for JWT signing (replace with a secure secret key)
 const JWT_SECRET = 'your-secret-key';
@@ -25,12 +25,12 @@ app.post('/api/register', async (req, res) => {
   try {
     const { username, email, password, dob, role, organization } = req.body;
     // Check if username already exists
-    if (users.find((user) => user.username === username)) {
+    if (users[username]) {
       return res.status(400).send('Username already exists');
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     // Store user data in the database
-    users.push({ username, email, password: hashedPassword, dob, role, organization });
+    users[username] = { username, email, password: hashedPassword, dob, role, organization, data: [] };
     res.status(201).send('User registered successfully');
   } catch (error) {
     res.status(500).send('Internal server error');
@@ -39,11 +39,9 @@ app.post('/api/register', async (req, res) => {
 
 // Login endpoint
 app.post('/api/login', async (req, res) => {
-  console.log(users)
   try {
     const { username, password } = req.body;
-    console.log(username,password)
-    const user = users.find((user) => user.username === username);
+    const user = users[username];
     if (!user) {
       return res.status(404).send('User not found');
     }
@@ -55,6 +53,16 @@ app.post('/api/login', async (req, res) => {
   } catch (error) {
     res.status(500).send('Internal server error');
   }
+});
+
+// Store data for a particular user
+app.post('/api/store-data', (req, res) => {
+  const { username, data } = req.body;
+  if (!users[username]) {
+    return res.status(404).send('User not found');
+  }
+  users[username].data.push(data);
+  res.status(200).send('Data stored successfully');
 });
 
 app.listen(PORT, () => {

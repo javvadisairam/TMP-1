@@ -51,6 +51,7 @@ const SignupPage = () => {
   
 
   return (
+    <div className='sign-up'>
     <div className="signup-container">
       {signupSuccess && <Navigate to="/SignupSuccessPage" />} {/* Conditional rendering of Navigate component */}
       <h2>Signup Page</h2>
@@ -64,6 +65,7 @@ const SignupPage = () => {
       </div>
       <button className="signup-button" onClick={handleSignup}>Signup</button>
       {submitted && errors.organization && <div className="error-message">{errors.organization}</div>}
+      </div>
     </div>
   );
 };

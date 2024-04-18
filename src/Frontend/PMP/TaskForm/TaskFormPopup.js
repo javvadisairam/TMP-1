@@ -108,7 +108,7 @@ const TaskFormPopup = ({ onSubmit, onClose }) => {
               />
             </div>
             <div className="button-container">
-              <button className="add-task-button" type="submit">Add Task</button>
+              <button className="add-task-button" type="submit">Edit Task</button>
             </div>
           </form>
         </div>

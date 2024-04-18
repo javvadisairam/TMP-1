@@ -2,10 +2,14 @@
 import React from 'react';
 import './tasklist.css';
 
-const TaskList = ({ tasks, onDeleteTask, onEditTask }) => {
+const TaskList = ({ tasks, currentPage, itemsPerPage, onDeleteTask, onEditTask }) => {
   if (!tasks || tasks.length === 0) {
     return <div className="task-list">No tasks available</div>;
   }
+
+  // Calculate the start and end indices based on current page and items per page
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, tasks.length);
 
   const handleDeleteTask = (taskId) => {
     onDeleteTask(taskId);
@@ -31,7 +35,7 @@ const TaskList = ({ tasks, onDeleteTask, onEditTask }) => {
           </tr>
         </thead>
         <tbody>
-          {tasks.map((task, index) => (
+          {tasks.slice(startIndex, endIndex).map((task, index) => (
             <tr key={index}>
               <td className="task-title">{task.title}</td>
               <td className={`priority-${task.priority.toLowerCase()}`}>{task.priority}</td>
@@ -40,7 +44,7 @@ const TaskList = ({ tasks, onDeleteTask, onEditTask }) => {
               <td>{task.deadline}</td>
               <td>{task.creationDate}</td>
               <td>
-                <button  className='edit-button' onClick={() => handleEditTask(task)}>Edit</button>
+                <button className='edit-button' onClick={() => handleEditTask(task)}>Edit</button>
                 <button className='delete-button' onClick={() => handleDeleteTask(task.id)}>Delete</button>
               </td>
             </tr>

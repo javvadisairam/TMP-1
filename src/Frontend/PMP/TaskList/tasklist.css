@@ -78,7 +78,7 @@
   z-index: 9999; /* Ensure the full title appears above other elements */
   background-color: #fff; /* Add background color to improve readability */
   padding: 5px; /* Add padding for better appearance */
-  border: 1px solid #ccc; /* Add border for clarity */
+  border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow for elevation */
 }
 
